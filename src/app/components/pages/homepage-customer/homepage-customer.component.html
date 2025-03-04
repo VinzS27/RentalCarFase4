@@ -1,0 +1,4 @@
+<div class="container">
+  <h2>Le tue prenotazioni</h2>
+  <my-table [tableConfig]="myTableConfig()" [data]="reservations" (actionEvent)="handleTableAction($event)"></my-table>
+</div>

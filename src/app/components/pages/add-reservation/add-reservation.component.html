@@ -1,0 +1,41 @@
+<div class="container-registration">
+  <h2>
+    @if (reservationId) {
+      Modifica Prenotazione
+    } @else {
+      Aggiungi Prenotazione
+    }
+  </h2>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="save()">
+
+    <label for="startDate" class="block">Data di ritiro:</label>
+    <input id="startDate" type="date" formControlName="startDate" class="input"/>
+    @if (registrationForm.get('startDate')?.invalid && registrationForm.get('startDate')?.touched) {
+      <p class="error">Imposta una data di ritiro.</p>
+    }
+
+    <label for="endDate" class="block">Data di riconsegna:</label>
+    <input id="endDate" type="date" formControlName="endDate" class="input"/>
+    @if (registrationForm.get('endDate')?.invalid && registrationForm.get('endDate')?.touched) {
+      <p class="error">Imposta una data di riconsegna.</p>
+    }
+
+    <label for="car" class="block">Auto disponibili:</label>
+    <select id="car" formControlName="carId" class="input">
+      @for (car of cars; track car) {
+        <option [value]="car.id" [disabled]="!car.availability">
+          {{ car.brand }} {{ car.model }} {{ car.year }} - {{ car.licensePlate }}
+        </option>
+      }
+    </select>
+
+    <button type="submit" class="btn-primary" [disabled]="!registrationForm.valid">
+      @if (reservationId) {
+        Aggiorna Prenotazione
+      } @else {
+        Salva Prenotazione
+      }
+    </button>
+  </form>
+</div>

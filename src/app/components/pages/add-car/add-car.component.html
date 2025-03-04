@@ -1,0 +1,46 @@
+<div class="container-registration">
+  <h2>@if (carId) {
+    Modifica Auto
+  } @else {
+    Aggiungi Auto
+  }</h2>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="save()">
+
+    <label for="brand" class="block">Brand:</label>
+    <input id="brand" type="text" formControlName="brand" class="input"/>
+    @if (registrationForm.get('brand')?.invalid && registrationForm.get('brand')?.touched) {
+      <p class="error">brand non valido.</p>
+    }
+    <label for="model" class="block">Model:</label>
+    <input id="model" type="text" formControlName="model" class="input"/>
+    @if (registrationForm.get('model')?.invalid && registrationForm.get('model')?.touched) {
+      <p class="error">model non valido.</p>
+    }
+    <label for="year" class="block">Anno:</label>
+    <input id="year" type="number" formControlName="year" class="input"/>
+    @if (registrationForm.get('year')?.invalid && registrationForm.get('year')?.touched) {
+      <p class="error">Anno non valido.</p>
+    }
+    <label for="licensePlate" class="block">Targa:</label>
+    <input id="licensePlate" type="text" formControlName="licensePlate" class="input"/>
+    @if (registrationForm.get('licensePlate')?.invalid && registrationForm.get('licensePlate')?.touched) {
+      <p class="error">licensePlate non valido.</p>
+    }
+
+    <label for="availability" class="block">Disponibilità:</label>
+    <select id="availability" formControlName="availability" class="input">
+      <option [value]="true">Sì</option>
+      <option [value]="false">No</option>
+    </select>
+
+    <button type="submit" class="btn-primary" [disabled]="!registrationForm.valid">
+      @if (carId) {
+        Aggiorna Auto
+      } @else {
+        Salva Auto
+      }
+    </button>
+
+  </form>
+</div>

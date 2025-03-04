@@ -1,0 +1,44 @@
+<div class="container-registration">
+  <h2>@if (userId) {
+    Modifica Utente
+  } @else {
+    Aggiungi Utente
+  }</h2>
+
+  <form [formGroup]="registrationForm" (ngSubmit)="save()">
+
+    <label for="username" class="block">Username:</label>
+    <input id="username" type="text" formControlName="username" class="input"/>
+    @if (registrationForm.get('username')?.invalid && registrationForm.get('username')?.touched) {
+      <p class="error">username non valido.</p>
+    }
+
+    <label for="password" class="block">Password:</label>
+    <input id="password" type="password" formControlName="password" class="input"/>
+    @if (registrationForm.get('password')?.invalid && registrationForm.get('password')?.touched) {
+      <p class="error">password obbligatoria.</p>
+    }
+
+    <label for="email" class="block">Email:</label>
+    <input id="email" type="email" formControlName="email" class="input"/>
+    @if (registrationForm.get('email')?.invalid && registrationForm.get('email')?.touched) {
+      <p class="error">email non valida.</p>
+    }
+
+    <label for="userProfile" class="block">Ruolo:</label>
+    <select id="userProfile" formControlName="role" class="input">
+      @for (role of roles; track role) {
+        <option [value]="role.type">{{ role.type }}</option>
+      }
+    </select>
+
+    <button type="submit" class="btn-primary" [disabled]="!registrationForm.valid">
+      @if (userId) {
+        Aggiorna Utente
+      } @else {
+        Salva Utente
+      }
+    </button>
+
+  </form>
+</div>

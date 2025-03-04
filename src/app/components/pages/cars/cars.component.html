@@ -1,0 +1,8 @@
+<div class="container">
+  <h2>Parco Auto</h2>
+  @if(isAdmin()){
+  <my-table [tableConfig]="myTableConfig()" [data]="cars" (actionEvent)="handleTableAction($event)"></my-table>
+  }@else{
+    <my-table [tableConfig]="myTableCustomerConfig()" [data]="cars"></my-table>
+  }
+</div>

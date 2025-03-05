@@ -84,9 +84,9 @@ export class RegistrationComponent {
         : this.userService.addUser(user);
 
       userObservable.subscribe({
-        next: async () => {
+        next: () => {
           alert(this.userId ? 'Modifica completata con successo!' : 'Registrazione completata con successo!');
-          await this.router.navigate(['/homepage']);
+          this.router.navigate(['/homepage']);
         },
         error: () => {
           alert(user ? 'Errore nella modifica.' : 'Errore nella registrazione.');

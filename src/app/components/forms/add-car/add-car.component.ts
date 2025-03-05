@@ -11,7 +11,7 @@ import {CarDTO} from '../../../models/carDTO';
   standalone: true
 })
 
-export class AddCarComponent{
+export class AddCarComponent {
   registrationForm: FormGroup;
   carId: number | null = null;
 
@@ -72,9 +72,9 @@ export class AddCarComponent{
         : this.carService.addCar(car);
 
       carObservable.subscribe({
-        next: async () => {
+        next: () => {
           alert(this.carId ? 'Modifica completata' : 'Registrazione completata');
-          await this.router.navigate(['/cars']);
+          this.router.navigate(['/cars']);
         },
         error: () => {
           alert(car ? 'Errore nella modifica.' : 'Errore nella registrazione.');

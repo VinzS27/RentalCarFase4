@@ -93,9 +93,9 @@ export class AddReservationComponent implements OnInit {
         : this.reservationService.addReservation(reservation);
 
       reservationObservable.subscribe({
-        next: async () => {
+        next: () => {
           alert(this.reservationId ? 'Modifica completata con successo!' : 'Registrazione completata con successo!');
-          await this.router.navigate(['/homepage-customer']);
+          this.router.navigate(['/homepage-customer']);
         },
         error: () => {
           alert('Errore nella registrazione o modifica.');

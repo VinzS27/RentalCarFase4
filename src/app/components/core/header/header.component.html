@@ -3,16 +3,12 @@
     <ul>
       @if (isAdmin()){
       <li><a routerLink="/homepage">Home</a></li>
+        <li><a routerLink="/reservations">Elenco Prenotazioni</a></li>
       }@else{
         <li><a routerLink="/homepage-customer">Home</a></li>
       }
-      <li><a routerLink="/cars">Cars</a></li>
+      <li><a routerLink="/cars">Parco Auto</a></li>
       <li><a routerLink="/profile">Profilo Utente</a></li>
-
-      @if (isAdmin()) {
-        <li><a routerLink="/reservations">Elenco Prenotazioni</a></li>
-      }
-
       <li><a (click)="logout()">Logout</a></li>
     </ul>
   </nav>

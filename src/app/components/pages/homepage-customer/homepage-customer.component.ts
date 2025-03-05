@@ -1,7 +1,7 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {AuthJwtService} from '../../../../services/authJwt.service';
 import {Router} from '@angular/router';
-import {MyAction, MyButtonConfig, MyTableActionEnum, MyTableComponent, MyTableConfig} from 'my-lib';
+import {MyButtonConfig, MyTableActionEnum, MyTableComponent, MyTableConfig} from 'my-lib';
 import {ReservationDTO} from '../../../models/reservationDTO';
 import {ReservationService} from '../../../../services/reservation.service';
 import {map} from 'rxjs';
@@ -13,18 +13,18 @@ import {map} from 'rxjs';
   standalone: true
 })
 
-export class HomepageCustomerComponent implements OnInit {
+export class HomepageCustomerComponent {
   reservations: ReservationDTO[] = []
+  private authService = inject(AuthJwtService);
+  private router = inject(Router);
+  private reservationService = inject(ReservationService);
 
-  constructor(private authService: AuthJwtService, private router: Router,
-              private reservationService: ReservationService) {
+  constructor() {
     if (!this.authService.isLogged()) {
       this.router.navigate(['/login']);
+    }else{
+      this.loadReservationsById();
     }
-  }
-
-  ngOnInit() {
-    this.loadReservationsById();
   }
 
   loadReservationsById() {
@@ -88,7 +88,6 @@ export class HomepageCustomerComponent implements OnInit {
     this.router.navigate(['/addReservation']);
   }
 
-  //aggiungere controllo data
   editReservation(reservation?: ReservationDTO) {
     if (reservation) {
       this.router.navigate(['/addReservation', reservation.id]);

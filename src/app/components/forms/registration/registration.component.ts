@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../../../services/user.service';
@@ -12,23 +12,27 @@ import {UserProfileDTO} from '../../../models/userProfileDTO';
   imports: [ReactiveFormsModule]
 })
 
-export class RegistrationComponent implements OnInit {
-
+export class RegistrationComponent {
   registrationForm: FormGroup;
   userId: number | null = null;
   roles: UserProfileDTO[] = [];
 
-  constructor(private fb: FormBuilder, private userService: UserService,
-              private router: Router, private route: ActivatedRoute) {
+  private fb = inject(FormBuilder);
+  private userService = inject(UserService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  constructor() {
     this.registrationForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required]
     });
+    this.initData();
   }
 
-  ngOnInit() {
+  private initData() {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.userId = id ? Number(id) : null;
@@ -39,7 +43,7 @@ export class RegistrationComponent implements OnInit {
     this.loadRoles();
   }
 
-  loadUserById(userId: number) {
+  private loadUserById(userId: number) {
     this.userService.getUserById(userId).subscribe({
       next: (user) => {
         this.registrationForm.patchValue({
@@ -53,7 +57,7 @@ export class RegistrationComponent implements OnInit {
     });
   }
 
-  loadRoles() {
+  private loadRoles() {
     this.userService.getRoles().subscribe(data => {
       this.roles = data;
     });
@@ -90,5 +94,4 @@ export class RegistrationComponent implements OnInit {
       });
     }
   }
-
 }

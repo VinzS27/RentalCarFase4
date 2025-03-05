@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ReservationService} from '../../../../services/reservation.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -18,10 +18,13 @@ export class AddReservationComponent implements OnInit {
   registrationForm: FormGroup;
   reservationId: number | null = null;
   cars: CarDTO[] = [];
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+  private carService = inject(CarService);
+  private reservationService = inject(ReservationService);
+  private route = inject(ActivatedRoute);
 
-  constructor(private fb: FormBuilder, private reservationService: ReservationService,
-              private carService: CarService, private authService: AuthJwtService,
-              private router: Router, private route: ActivatedRoute) {
+  constructor(private authService: AuthJwtService) {
     this.registrationForm = this.fb.group({
       startDate: ['', [Validators.required]],
       endDate: ['', [Validators.required]],

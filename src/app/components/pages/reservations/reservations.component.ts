@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {AuthJwtService} from '../../../../services/authJwt.service';
 import {Router} from '@angular/router';
 import {ReservationService} from '../../../../services/reservation.service';
@@ -13,19 +13,18 @@ import {map} from 'rxjs';
   standalone: true
 })
 
-export class ReservationsComponent implements OnInit {
-
+export class ReservationsComponent{
   reservations: ReservationDTO[] = []
+  private authService = inject(AuthJwtService);
+  private router = inject(Router);
+  private reservationService = inject(ReservationService);
 
-  constructor(private authService: AuthJwtService, private router: Router,
-              private reservationService: ReservationService) {
+  constructor() {
     if (!this.authService.isLogged()) {
       this.router.navigate(['/login']);
+    }else{
+      this.loadReservations();
     }
-  }
-
-  ngOnInit() {
-    this.loadReservations();
   }
 
   loadReservations() {

@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
 import {AuthJwtService} from './authJwt.service';
 
@@ -8,8 +8,8 @@ import {AuthJwtService} from './authJwt.service';
 
 export class RouteGuardService implements CanActivate {
 
-  constructor(private authService: AuthJwtService, private router: Router) {
-  }
+  private router = inject(Router);
+  private authService = inject(AuthJwtService);
 
   canActivate(
     next: ActivatedRouteSnapshot,

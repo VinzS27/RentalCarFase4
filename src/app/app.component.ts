@@ -12,5 +12,4 @@ import {HeaderComponent} from './components/core/header/header.component';
 
 export class AppComponent {
   title = 'RentalCarAngular19';
-
 }

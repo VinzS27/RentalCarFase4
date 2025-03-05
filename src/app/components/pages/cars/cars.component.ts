@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {CarDTO} from '../../../models/carDTO';
 import {AuthJwtService} from '../../../../services/authJwt.service';
 import {Router} from '@angular/router';
@@ -16,8 +16,9 @@ export class CarsComponent implements OnInit {
   cars: CarDTO[] = []
   role: string | null = null;
 
-  constructor(private authService: AuthJwtService,
-              private router: Router, private carService: CarService) {
+  private router = inject(Router);
+
+  constructor(private authService: AuthJwtService, private carService: CarService) {
     if (!this.authService.isLogged()) {
       this.router.navigate(['/login']);
     }

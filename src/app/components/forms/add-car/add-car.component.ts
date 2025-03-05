@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CarService} from '../../../../services/car.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -11,12 +11,16 @@ import {CarDTO} from '../../../models/carDTO';
   standalone: true
 })
 
-export class AddCarComponent implements OnInit {
+export class AddCarComponent{
   registrationForm: FormGroup;
   carId: number | null = null;
 
-  constructor(private fb: FormBuilder, private carService: CarService,
-              private router: Router, private route: ActivatedRoute) {
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+  private carService = inject(CarService);
+  private route = inject(ActivatedRoute);
+
+  constructor() {
     this.registrationForm = this.fb.group({
       model: ['', [Validators.required]],
       brand: ['', [Validators.required]],
@@ -24,9 +28,7 @@ export class AddCarComponent implements OnInit {
       licensePlate: ['', [Validators.required]],
       availability: ['', [Validators.required]]
     });
-  }
 
-  ngOnInit() {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.carId = id ? Number(id) : null;
@@ -71,7 +73,7 @@ export class AddCarComponent implements OnInit {
 
       carObservable.subscribe({
         next: async () => {
-          alert(this.carId ? 'Modifica completata con successo!' : 'Registrazione completata con successo!');
+          alert(this.carId ? 'Modifica completata' : 'Registrazione completata');
           await this.router.navigate(['/cars']);
         },
         error: () => {

@@ -1,14 +1,14 @@
 import {Routes} from '@angular/router';
-import {LoginComponent} from './components/pages/login/login.component';
+import {LoginComponent} from './components/forms/login/login.component';
 import {HomepageComponent} from './components/pages/homepage/homepage.component';
 import {CarsComponent} from './components/pages/cars/cars.component';
 import {ProfileComponent} from './components/pages/profile/profile.component';
 import {ReservationsComponent} from './components/pages/reservations/reservations.component';
-import {RegistrationComponent} from './components/pages/registration/registration.component';
-import {AddCarComponent} from './components/pages/add-car/add-car.component';
+import {RegistrationComponent} from './components/forms/registration/registration.component';
+import {AddCarComponent} from './components/forms/add-car/add-car.component';
 import {HomepageCustomerComponent} from './components/pages/homepage-customer/homepage-customer.component';
 import {HeaderComponent} from './components/core/header/header.component';
-import {AddReservationComponent} from './components/pages/add-reservation/add-reservation.component';
+import {AddReservationComponent} from './components/forms/add-reservation/add-reservation.component';
 
 export const routes: Routes = [
   {path: 'login', component: LoginComponent, title: 'Login page'},

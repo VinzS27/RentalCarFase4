@@ -1,39 +1,36 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
 import {AuthJwtService} from '../../../../services/authJwt.service';
 
 @Component({
   selector: 'app-header',
-  standalone: true,
   templateUrl: './header.component.html',
+  standalone: true,
   imports: [RouterLink]
 })
 
-export class HeaderComponent implements OnInit {
-  isUserLoggedIn: boolean = false;
-  role: string | null = null;
-  //vedere inject da tutorial Angular 19
-  constructor(private authService: AuthJwtService, private router: Router) {
-  }
+export class HeaderComponent {
+  private authService = inject(AuthJwtService);
+  private router = inject(Router);
 
-  ngOnInit(): void {
+  isUserLoggedIn = this.authService.isLogged();
+  role = this.isUserLoggedIn ? this.authService.getRole() : null;
+
+  constructor() {
     this.checkUserStatus();
   }
 
-  checkUserStatus(): void {
-    this.isUserLoggedIn = this.authService.isLogged();
-    if (!this.isUserLoggedIn)
-      this.router.navigate(['/login'])
-    this.role = this.authService.isLogged() ? this.authService.getRole() : null;
-    if (this.isAdmin())
-      this.router.navigate(['/homepage'])
-    else
-      this.router.navigate(['/homepage-customer'])
+  private checkUserStatus(): void {
+    if (!this.isUserLoggedIn) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.router.navigate([this.isAdmin() ? '/homepage' : '/homepage-customer']);
   }
 
   logout(): void {
     this.authService.logout();
-    this.router.navigate(['/login']).then(() => window.location.reload());
+    this.router.navigate(['/login']);
   }
 
   isAdmin(): boolean {

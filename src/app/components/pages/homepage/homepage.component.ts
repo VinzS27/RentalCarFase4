@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {MyButtonConfig, MyTableActionEnum, MyTableComponent, MyTableConfig} from 'my-lib';
 import {AuthJwtService} from '../../../../services/authJwt.service';
@@ -12,21 +12,22 @@ import {UserDTO} from '../../../models/userDTO';
   imports: [MyTableComponent]
 })
 
-export class HomepageComponent implements OnInit {
+export class HomepageComponent {
   users: UserDTO[] = []
 
-  constructor(private authService: AuthJwtService,
-              private router: Router, private userService: UserService) {
+  private authService = inject(AuthJwtService);
+  private router = inject(Router);
+  private userService = inject(UserService);
+
+  constructor() {
     if (!this.authService.isLogged()) {
       this.router.navigate(['/login']);
+    } else {
+      this.loadUsers();
     }
   }
 
-  ngOnInit() {
-    this.loadUsers();
-  }
-
-  loadUsers() {
+  private loadUsers() {
     this.userService.getUsers().subscribe({
       next: (data) => {
         this.users = data;

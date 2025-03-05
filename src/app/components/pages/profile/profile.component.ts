@@ -1,4 +1,4 @@
-import {Component, OnInit, signal} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthJwtService} from '../../../../services/authJwt.service';
 import {UserService} from '../../../../services/user.service';
@@ -12,20 +12,20 @@ import {UserDTO} from '../../../models/userDTO';
   standalone: true
 })
 
-export class ProfileComponent implements OnInit {
+export class ProfileComponent {
   user: UserDTO[] = [];
   role: string | null = null;
+  private authService = inject(AuthJwtService);
+  private router = inject(Router);
+  private userService = inject(UserService);
 
-  constructor(private authService: AuthJwtService, private router: Router,
-    private userService: UserService) {
+  constructor() {
     if (!this.authService.isLogged()) {
       this.router.navigate(['/login']);
+    }else{
+      this.loadUser();
+      this.role = this.authService.isLogged() ? this.authService.getRole() : null;
     }
-  }
-
-  ngOnInit() {
-    this.loadUser();
-    this.role = this.authService.isLogged() ? this.authService.getRole() : null;
   }
 
   loadUser() {

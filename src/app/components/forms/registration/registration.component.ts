@@ -1,7 +1,7 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserService} from '../../../../services/user.service';
+import {UserService} from '../../../services/user.service';
 import {UserDTO} from '../../../models/userDTO';
 import {UserProfileDTO} from '../../../models/userProfileDTO';
 
@@ -12,7 +12,7 @@ import {UserProfileDTO} from '../../../models/userProfileDTO';
   imports: [ReactiveFormsModule]
 })
 
-export class RegistrationComponent {
+export class RegistrationComponent implements OnInit {
   registrationForm: FormGroup;
   userId: number | null = null;
   roles: UserProfileDTO[] = [];
@@ -29,10 +29,9 @@ export class RegistrationComponent {
       email: ['', [Validators.required, Validators.email]],
       role: ['', Validators.required]
     });
-    this.initData();
   }
 
-  private initData() {
+  ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.userId = id ? Number(id) : null;

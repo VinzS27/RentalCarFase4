@@ -1,6 +1,6 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Router, RouterLink} from '@angular/router';
-import {AuthJwtService} from '../../../../services/authJwt.service';
+import {AuthJwtService} from '../../../services/authJwt.service';
 
 @Component({
   selector: 'app-header',
@@ -9,14 +9,14 @@ import {AuthJwtService} from '../../../../services/authJwt.service';
   imports: [RouterLink]
 })
 
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   private authService = inject(AuthJwtService);
   private router = inject(Router);
 
   isUserLoggedIn = this.authService.isLogged();
   role = this.isUserLoggedIn ? this.authService.getRole() : null;
 
-  constructor() {
+  ngOnInit(): void {
     this.checkUserStatus();
   }
 
@@ -34,6 +34,6 @@ export class HeaderComponent {
   }
 
   isAdmin(): boolean {
-    return this.role?.includes('ROLE_ADMIN') || false;
+    return this.role?.includes('admin') || false;
   }
 }

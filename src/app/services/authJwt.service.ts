@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {environment} from '../environments/environment';
+import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {Token} from '../app/models/Token';
+import {Token} from '../models/Token';
 import {map} from 'rxjs';
 import {JwtHelperService} from '@auth0/angular-jwt';
 

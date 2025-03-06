@@ -1,8 +1,7 @@
-import {Component, inject, signal} from '@angular/core';
+import {Component, inject, OnInit, signal} from '@angular/core';
 import {Router} from '@angular/router';
 import {MyButtonConfig, MyTableActionEnum, MyTableComponent, MyTableConfig} from 'my-lib';
-import {AuthJwtService} from '../../../../services/authJwt.service';
-import {UserService} from '../../../../services/user.service';
+import {UserService} from '../../../services/user.service';
 import {UserDTO} from '../../../models/userDTO';
 
 @Component({
@@ -12,19 +11,14 @@ import {UserDTO} from '../../../models/userDTO';
   imports: [MyTableComponent]
 })
 
-export class HomepageComponent {
+export class HomepageComponent implements OnInit {
   users: UserDTO[] = []
 
-  private authService = inject(AuthJwtService);
   private router = inject(Router);
   private userService = inject(UserService);
 
-  constructor() {
-    if (!this.authService.isLogged()) {
-      this.router.navigate(['/login']);
-    } else {
-      this.loadUsers();
-    }
+  ngOnInit(): void {
+    this.loadUsers();
   }
 
   private loadUsers() {
@@ -110,4 +104,6 @@ export class HomepageComponent {
       });
     }
   }
+
+
 }

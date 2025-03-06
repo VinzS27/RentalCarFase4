@@ -1,9 +1,9 @@
-import {Component, inject, signal} from '@angular/core';
-import {AuthJwtService} from '../../../../services/authJwt.service';
+import {Component, inject, OnInit, signal} from '@angular/core';
+import {AuthJwtService} from '../../../services/authJwt.service';
 import {Router} from '@angular/router';
 import {MyButtonConfig, MyTableActionEnum, MyTableComponent, MyTableConfig} from 'my-lib';
 import {ReservationDTO} from '../../../models/reservationDTO';
-import {ReservationService} from '../../../../services/reservation.service';
+import {ReservationService} from '../../../services/reservation.service';
 import {map} from 'rxjs';
 
 @Component({
@@ -13,18 +13,14 @@ import {map} from 'rxjs';
   standalone: true
 })
 
-export class HomepageCustomerComponent {
+export class HomepageCustomerComponent implements OnInit {
   reservations: ReservationDTO[] = []
   private authService = inject(AuthJwtService);
   private router = inject(Router);
   private reservationService = inject(ReservationService);
 
-  constructor() {
-    if (!this.authService.isLogged()) {
-      this.router.navigate(['/login']);
-    }else{
-      this.loadReservationsById();
-    }
+  ngOnInit() {
+    this.loadReservationsById();
   }
 
   loadReservationsById() {
@@ -53,7 +49,7 @@ export class HomepageCustomerComponent {
     ],
     order: {defaultColumn: 'startDate', orderType: 'asc'},
     search: {columns: ['startDate', 'status']},
-    pagination: {itemPerPage: 5, itemPerPageOptions: [5,10,15]},
+    pagination: {itemPerPage: 5, itemPerPageOptions: [5, 10, 15]},
     actions: [
       {
         type: MyTableActionEnum.NEW_ROW,

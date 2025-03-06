@@ -1,8 +1,8 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {CarDTO} from '../../../models/carDTO';
-import {AuthJwtService} from '../../../../services/authJwt.service';
+import {AuthJwtService} from '../../../services/authJwt.service';
 import {Router} from '@angular/router';
-import {CarService} from '../../../../services/car.service';
+import {CarService} from '../../../services/car.service';
 import {MyButtonConfig, MyTableActionEnum, MyTableComponent, MyTableConfig} from 'my-lib';
 
 @Component({
@@ -115,6 +115,6 @@ export class CarsComponent implements OnInit {
   }
 
   isAdmin(): boolean {
-    return this.role?.includes('ROLE_ADMIN') || false;
+    return this.role?.includes('admin') || false;
   }
 }

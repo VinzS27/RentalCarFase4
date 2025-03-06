@@ -1,11 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {ReservationService} from '../../../../services/reservation.service';
+import {ReservationService} from '../../../services/reservation.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ReservationDTO} from '../../../models/reservationDTO';
 import {CarDTO} from '../../../models/carDTO';
-import {CarService} from '../../../../services/car.service';
-import {AuthJwtService} from '../../../../services/authJwt.service';
+import {CarService} from '../../../services/car.service';
+import {AuthJwtService} from '../../../services/authJwt.service';
 
 @Component({
   selector: 'app-add-reservation',

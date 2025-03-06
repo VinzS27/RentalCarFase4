@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import {AuthJwtService} from '../../../../services/authJwt.service';
+import {AuthJwtService} from '../../../services/authJwt.service';
 
 @Component({
   selector: 'app-login',

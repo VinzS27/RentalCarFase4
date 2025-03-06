@@ -1,7 +1,5 @@
-import {Component, inject, signal} from '@angular/core';
-import {AuthJwtService} from '../../../../services/authJwt.service';
-import {Router} from '@angular/router';
-import {ReservationService} from '../../../../services/reservation.service';
+import {Component, inject, OnInit, signal} from '@angular/core';
+import {ReservationService} from '../../../services/reservation.service';
 import {ReservationDTO} from '../../../models/reservationDTO';
 import {MyButtonConfig, MyTableActionEnum, MyTableComponent, MyTableConfig} from 'my-lib';
 import {map} from 'rxjs';
@@ -13,18 +11,12 @@ import {map} from 'rxjs';
   standalone: true
 })
 
-export class ReservationsComponent{
+export class ReservationsComponent implements OnInit {
   reservations: ReservationDTO[] = []
-  private authService = inject(AuthJwtService);
-  private router = inject(Router);
   private reservationService = inject(ReservationService);
 
-  constructor() {
-    if (!this.authService.isLogged()) {
-      this.router.navigate(['/login']);
-    }else{
-      this.loadReservations();
-    }
+  ngOnInit() {
+    this.loadReservations()
   }
 
   loadReservations() {

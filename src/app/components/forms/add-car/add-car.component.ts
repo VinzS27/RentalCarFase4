@@ -1,6 +1,6 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CarService} from '../../../../services/car.service';
+import {CarService} from '../../../services/car.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CarDTO} from '../../../models/carDTO';
 
@@ -11,7 +11,7 @@ import {CarDTO} from '../../../models/carDTO';
   standalone: true
 })
 
-export class AddCarComponent {
+export class AddCarComponent implements OnInit {
   registrationForm: FormGroup;
   carId: number | null = null;
 
@@ -28,7 +28,9 @@ export class AddCarComponent {
       licensePlate: ['', [Validators.required]],
       availability: ['', [Validators.required]]
     });
+  }
 
+    ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       this.carId = id ? Number(id) : null;
